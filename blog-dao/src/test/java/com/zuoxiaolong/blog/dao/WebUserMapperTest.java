@@ -17,7 +17,7 @@
 package com.zuoxiaolong.blog.dao;
 
 import com.zuoxiaolong.blog.mapper.WebUserMapper;
-import com.zuoxiaolong.blog.model.WebUser;
+import com.zuoxiaolong.blog.model.persistent.WebUser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,8 @@ public class WebUserMapperTest extends AbstractSpringContextTest {
         WebUser user = new WebUser();
         user.setUsername("zuoxiaolong");
         user.setPassword("123456");
-        webUserMapper.insert(user);
+        user.setPasswordSalt("zuoxiaolong");
+        webUserMapper.insertSelective(user);
         Assert.assertNotNull(webUserMapper.selectByPrimaryKey(1));
     }
 

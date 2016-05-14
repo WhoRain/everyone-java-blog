@@ -14,30 +14,23 @@
  * limitations under the License.
  */
 
-package com.zuoxiaolong.blog.service;
+package com.zuoxiaolong.blog.web.controller;
 
-import com.zuoxiaolong.blog.model.persistent.WebUser;
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Xiaolong Zuo
  * @since 1.0.0
  */
-public class WebUserServiceTest extends AbstractSpringContextTest {
+@Controller
+@RequestMapping("/user")
+public class WebUserController {
 
-    @Autowired
-    private WebUserService webUserService;
-
-    @Test
-    public void insert() {
-        Assert.assertNotNull(webUserService);
-        WebUser user = new WebUser();
-        user.setUsername("zuoxiaolong");
-        user.setPassword("123456");
-        webUserService.insert(user);
-        Assert.assertNotNull(webUserService.selectByPrimaryKey(1));
+    @RequestMapping("/blog/{username}")
+    public String blog(@PathVariable String username) {
+        return "page";
     }
 
 }

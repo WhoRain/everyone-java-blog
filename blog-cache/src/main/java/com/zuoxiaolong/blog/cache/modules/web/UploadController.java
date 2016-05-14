@@ -13,31 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.zuoxiaolong.blog.cache.modules.web;
 
-package com.zuoxiaolong.blog.service;
-
+import com.zuoxiaolong.blog.common.web.BaseController;
 import com.zuoxiaolong.blog.model.persistent.WebUser;
-import org.junit.Assert;
-import org.junit.Test;
+import com.zuoxiaolong.blog.service.WebUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author Xiaolong Zuo
+ * @author Boren You
+ * @date 2016/5/12 19:45
  * @since 1.0.0
  */
-public class WebUserServiceTest extends AbstractSpringContextTest {
+
+@Controller
+public class UploadController extends BaseController {
 
     @Autowired
     private WebUserService webUserService;
 
-    @Test
-    public void insert() {
-        Assert.assertNotNull(webUserService);
-        WebUser user = new WebUser();
-        user.setUsername("zuoxiaolong");
-        user.setPassword("123456");
-        webUserService.insert(user);
-        Assert.assertNotNull(webUserService.selectByPrimaryKey(1));
-    }
+    @RequestMapping(value = "/cache/test")
+    public void test(){
 
+        WebUser webUser = webUserService.selectByPrimaryKey(1);
+        logger.debug("userId:" + webUser.getId());
+        logger.debug("username:" + webUser.getUsername());
+        logger.debug("password:" + webUser.getPassword());
+        renderString(getHttpServletResponse(),webUser);
+
+    }
 }

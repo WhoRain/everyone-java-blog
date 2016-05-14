@@ -17,7 +17,7 @@
 package com.zuoxiaolong.blog.service.impl;
 
 import com.zuoxiaolong.blog.mapper.WebUserMapper;
-import com.zuoxiaolong.blog.model.WebUser;
+import com.zuoxiaolong.blog.model.persistent.WebUser;
 import com.zuoxiaolong.blog.service.WebUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class WebUserServiceImpl implements WebUserService {
 
     @Override
     public Integer insert(WebUser webUser) {
-        return webUserMapper.insert(webUser);
+        return webUserMapper.insertSelective(webUser);
     }
 
     @Override
