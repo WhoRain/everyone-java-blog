@@ -64,16 +64,7 @@ public class ContributorController extends BaseController{
 
             int row = contributorService.insertSelective(contributor);
 
-            if (row < 1) {
-                model.addAttribute("result", "新增地点 " +
-                        "贡献者失败");
-                return "contributor/contributor-error";
-            }
-            if (row > 1) {
-                model.addAttribute("result", "新增地点 " +
-                        "贡献者失败");
-                return "contributor/contributor-error";
-            }
+
 
             model.addAttribute("result", contributor);
         } catch (Exception e) {
