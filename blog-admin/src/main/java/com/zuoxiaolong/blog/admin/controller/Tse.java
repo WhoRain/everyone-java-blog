@@ -25,7 +25,7 @@ package com.zuoxiaolong.blog.admin.controller;
 public class Tse {
     public static void main(String[] args) {
         System.out.println("haah");
-        System.out.println("ddd");
+        System.out.println("55555");
         System.out.println("add");
     }
 }
