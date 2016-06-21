@@ -22,7 +22,7 @@ package com.zuoxiaolong.blog.admin.controller;
  * @date 2016/5/15
  * @since 1.0.0
  */
-public class Tse {
+public class ContributorController {
     public static void main(String[] args) {
         System.out.println("haah");
         System.out.println("6666666");
