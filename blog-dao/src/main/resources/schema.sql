@@ -101,9 +101,32 @@ ALTER TABLE `java_blog`.`web_user` ADD UNIQUE ( `nickname` );
 ALTER TABLE `java_blog`.`contributor` ADD UNIQUE ( `contributor_name` );
 ALTER TABLE `java_blog`.`resource` ADD UNIQUE ( `resource_path` );
 
+ALTER TABLE `java_blog`.`message_box` ADD COLUMN `title` VARCHAR(128) NOT null DEFAULT '' COMMENT '标题';
+ALTER TABLE `java_blog`.`web_user` ADD COLUMN `token` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '移动端TOKEN';
 
+ALTER TABLE `java_blog`.`user_article` ADD COLUMN `comment_times` INT(11) NOT NULL COMMENT '评论次数';
 
+ALTER TABLE `java_blog`.`blog_config` ADD COLUMN `blog_title` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '博客标题';
+ALTER TABLE `java_blog`.`blog_config` ADD COLUMN `blog_sub_title` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '博客子标题';
 
+ALTER TABLE `java_blog`.`article_comment` ADD COLUMN `parents_comment_id` VARCHAR(128) NOT NULL DEFAULT '0,' COMMENT '父级评论路径';
+ALTER TABLE `java_blog`.`article_comment` MODIFY `reply_comment_id` INT(11) NOT NULL DEFAULT 0 COMMENT '父级评论';
+
+ALTER TABLE `java_blog`.`user_article` MODIFY `read_times` int(11) NOT NULL DEFAULT 0 COMMENT '阅读次数';
+ALTER TABLE `java_blog`.`user_article` MODIFY `thumbup_times` int(11) NOT NULL DEFAULT 0 COMMENT '点赞次数';
+ALTER TABLE `java_blog`.`user_article` MODIFY `comment_times` int(11) NOT NULL DEFAULT 0 COMMENT '评论次数';
+ALTER TABLE `java_blog`.`user_article` MODIFY  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态:0,草稿 1,发布 2,删除';
+
+CREATE TABLE `java_blog`.`article_thumbup` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `article_id` INT NOT NULL COMMENT '文章ID',
+  `ip_address` VARCHAR(100) NOT NULL COMMENT 'ip地址',
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='文章点赞表';
+
+ALTER TABLE `java_blog`.`user_article` ADD COLUMN `publish_time` DATETIME COMMENT '发布时间';
 
 
 

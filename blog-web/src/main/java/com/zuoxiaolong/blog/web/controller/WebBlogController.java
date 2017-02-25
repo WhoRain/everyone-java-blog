@@ -16,51 +16,74 @@
 
 package com.zuoxiaolong.blog.web.controller;
 
-import com.zuoxiaolong.blog.model.dto.UserBlogInfo;
+import com.zuoxiaolong.blog.common.bean.JsonResponse;
 import com.zuoxiaolong.blog.model.persistent.BlogConfig;
-import com.zuoxiaolong.blog.web.service.WebBlogService;
+import com.zuoxiaolong.blog.sdk.Api;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * 博客主页controller
- * @author linjiedeng
- * @since 1.0.0
- */
+@RequestMapping("/WebBlog")
 @Controller
-@RequestMapping("/blog")
-public class WebBlogController {
-
-    @Resource
-    private WebBlogService webBlogService;
+public class WebBlogController extends AbstractWebController {
 
     /**
-     * 根据请求路径中的用户名跳转到个人博客主页
-     * @param username
+     * 获取个人博客主页信息
+     *
      * @return
      */
-    @RequestMapping("/homepage/{username}")
-    public ModelAndView blog(@PathVariable String username) {
-        UserBlogInfo userBlogInfo = webBlogService.selectUserBlogInfoByUsername(username);
-        ModelAndView view = new ModelAndView("homepage");
-        view.addObject(userBlogInfo);
-        return view;
+    @RequestMapping("/HomePage/{username}")
+    public String personalBlogHomePage(@PathVariable String username) {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", username);
+        JsonResponse response = invokeApi(Api.WebBlog_HomePage, params);
+        if (response.getCode() == 200) {
+            setModelAttribute("result", response);
+            return "/blog/blog";
+        }
+        return "/user/login";
     }
 
     /**
-     * 更新个人简介
+     * 获取我的文章，加载更多
+     * @param offset
+     * @param size
+     */
+    @RequestMapping("/getMyBlogArticle")
+    public void getMyBlogArticle(String offset, String size, String username) {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("offset", offset);
+        JsonResponse response = invokeApi(Api.WebBlog_HomePage, params);
+        renderJson(response);
+    }
+
+    /**
+     * 更新个人简介,地址,博客名称等信息
      * @param blogConfig
      * @return
      */
-    @RequestMapping("/update/config")
-    public boolean updateBlogConfig(@RequestBody BlogConfig blogConfig) {
-
-        return false;
+    @RequestMapping(value = "/Update/Config", method = RequestMethod.POST)
+    public String updateBlogConfig(BlogConfig blogConfig) {
+        JsonResponse response = invokeApi(Api.WebBlog_Update_Config, blogConfig);
+        setModelAttribute("result", response);
+        return "redirect:/WebBlog/HomePage/" + getUsername();
     }
+
+    /**
+     * 查询用户博客的配置信息
+     * @return
+     */
+    @RequestMapping(value = "/Select/Config", method = RequestMethod.GET)
+    public String selectUserBlogConfig() {
+        JsonResponse response = invokeApi(Api.WebBlog_Select_Config);
+        setModelAttribute("result", response);
+        setModelAttribute("active", "self-config");
+        return "/blog/blog-config";
+    }
+
 }

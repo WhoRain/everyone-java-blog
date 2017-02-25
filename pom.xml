@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zuoxiaolong.blog</groupId>
@@ -34,12 +35,12 @@
         <module>blog-api</module>
         <module>blog-dao</module>
         <module>blog-service</module>
-        <module>blog-web</module>
-        <module>blog-admin</module>
         <module>blog-common</module>
         <module>blog-model</module>
-        <module>blog-cache</module>
+        <module>blog-sdk</module>
+        <module>blog-web</module>
     </modules>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,11 +57,16 @@
         <hibernate.version>5.0.6.Final</hibernate.version>
         <jstl.version>1.2</jstl.version>
         <commons.fileupload.version>1.3.1</commons.fileupload.version>
+        <commons.io.version>2.2</commons.io.version>
         <aspectjweaver.version>1.8.8</aspectjweaver.version>
         <mysql.version>5.1.34</mysql.version>
         <shiro.version>1.2.4</shiro.version>
         <mockito.version>1.10.19</mockito.version>
         <derby.version>10.7.1.1</derby.version>
+        <jackson.version>2.2.3</jackson.version>
+        <fastjson.version>1.1.40</fastjson.version>
+        <guava.version>17.0</guava.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -84,6 +90,11 @@
             <dependency>
                 <groupId>com.zuoxiaolong.blog</groupId>
                 <artifactId>blog-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zuoxiaolong.blog</groupId>
+                <artifactId>blog-sdk</artifactId>
                 <version>${blog.version}</version>
             </dependency>
             <dependency>
@@ -115,6 +126,11 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -334,6 +350,56 @@
                 <version>1.3.176</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+
+            <!-- jackson json -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-jaxb-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- fastjson json -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- google java lib -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <!-- common util  -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -347,6 +413,7 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+
 
     <build>
         <pluginManagement>

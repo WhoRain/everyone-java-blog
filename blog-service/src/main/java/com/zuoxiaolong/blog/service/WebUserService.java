@@ -16,6 +16,7 @@
 
 package com.zuoxiaolong.blog.service;
 
+import com.zuoxiaolong.blog.model.dto.WebUserDTO;
 import com.zuoxiaolong.blog.model.persistent.WebUser;
 
 /**
@@ -24,8 +25,22 @@ import com.zuoxiaolong.blog.model.persistent.WebUser;
  */
 public interface WebUserService {
 
-    Integer insert(WebUser webUser);
+    WebUser register(WebUser webUser);
 
-    WebUser selectByPrimaryKey(Integer id);
+    WebUser login(String username, String password);
 
+    WebUser loginWithToken(String token);
+
+    void modifyPassword(String username, String oldPassword, String newPassword);
+
+    boolean checkUsername(String username);
+
+    WebUser checkToken(String token);
+
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    WebUserDTO getLoginWebUser(Integer userId);
 }

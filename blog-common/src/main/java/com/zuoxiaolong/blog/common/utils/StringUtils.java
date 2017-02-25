@@ -16,6 +16,10 @@
 
 package com.zuoxiaolong.blog.common.utils;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.io.UnsupportedEncodingException;
+
 /**
  * 处理string相关的工具方法
  *
@@ -32,6 +36,47 @@ public interface StringUtils {
      */
     static boolean isEmpty(String s) {
         return s == null || s.trim().length() == 0;
+    }
+
+    static byte[] toBytes(String s) {
+        try {
+            return s.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static String fromBytes(byte[] bytes) {
+        try {
+            return new String(bytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static boolean isNumeric(final CharSequence cs) {
+        if (isEmpty(cs)) {
+            return false;
+        }
+        final int sz = cs.length();
+        for (int i = 0; i < sz; i++) {
+            if (Character.isDigit(cs.charAt(i)) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean isEmpty(final CharSequence cs) {
+        return cs == null || cs.length() == 0;
+    }
+
+    static String escapeHtml(String html) {
+        return StringEscapeUtils.escapeHtml4(html);
+    }
+
+    static String unescapeHtml(String html) {
+        return StringEscapeUtils.unescapeHtml4(html);
     }
 
 }

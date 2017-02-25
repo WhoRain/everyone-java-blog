@@ -9,9 +9,10 @@
         <result column="sender" property="sender" jdbcType="INTEGER"/>
         <result column="receiver" property="receiver" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, create_time, update_time, content, sender, receiver, status
+    id, create_time, update_time, content, sender, receiver, status, title
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -41,6 +42,9 @@
             <if test="status != null">
                 status,
             </if>
+            <if test="title !=null">
+                title
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -57,6 +61,9 @@
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
+            </if>
+            <if test="title!=null">
+                #{title,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -78,4 +85,25 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <!--查询消息列表的条件-->
+    <sql id="select_message_box_lists">
+        <if test="messageBox.sender != null and messageBox.sender != ''">
+            AND sender = #{messageBox.sender,jdbcType = TINYINT}
+        </if>
+        <if test="messageBox.receiver != null and messageBox.receiver != ''">
+            AND receiver = #{messageBox.receiver,jdbcType = TINYINT}
+        </if>
+        <if test="messageBox.status != null and messageBox.status != ''">
+            AND status = #{messageBox.status,jdbcType=TINYINT}
+        </if>
+        AND 1 = 1
+    </sql>
+    <!--根据复合条件分页查询消息列表-->
+    <select id="getMessagesByPage" resultMap="BaseResultMap">
+        SELECT *
+        FROM message_box
+        <where>
+            <include refid="select_message_box_lists"></include>
+        </where>
+    </select>
 </mapper>

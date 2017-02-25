@@ -24,6 +24,8 @@ import java.util.Properties;
  *
  * @author Xiaolong Zuo
  * @since 1.0.0
+ *
+ * @see HeldPropertyPlaceholderConfigurer
  */
 public class ConfigurerPropertiesHolder {
 
@@ -65,6 +67,18 @@ public class ConfigurerPropertiesHolder {
             return null;
         }
         return properties.getProperty(name);
+    }
+
+    /**
+     * 根据name查询属性值
+     *
+     * @param name 属性名称
+     * @param defaultValue 默认值
+     * @return 如果有值则返回对应的值,否则返回默认值
+     */
+    public static String getProperty(String name, String defaultValue) {
+        String value = getProperty(name);
+        return (value == null) ? defaultValue : value;
     }
 
 }
